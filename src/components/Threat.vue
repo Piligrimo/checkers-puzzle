@@ -62,7 +62,5 @@ export default {
   position: fixed;
   top: 0;
   opacity: 0.4;
-  mix-blend-mode: color-burn;
-  background-blend-mode: color-burn;
 }
 </style>
