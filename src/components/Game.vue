@@ -14,7 +14,30 @@
         />
       </div>
     </div>
-    <h1 >{{ message }}</h1>
+    <template v-if="winningCondition">
+      <h3>
+        Время не тратя иди напрямик <br>
+        В место, где старый стоит грузовик. <br>
+        Там возле белых живых голубей <br>
+        Круг образует россыпь камней. <br>
+        Выберешь камень и можешь бежать. <br>
+      </h3>
+
+      <h3>
+        P.S.:Сердце подскажет, какой нужно брать.
+      </h3>
+
+      <h3>
+        Камень доставить нужно быстрей<br>
+        В место, где много странных вещей.<br>
+        Русский поэт имя улице дал.<br>
+        В арке скрывается нужный «квартал»<br>
+        Арка в «квартал» приведёт прямиком<br>
+        Там отыщи то ли гриб, то ли дом.<br>
+      </h3>
+      <br><br>
+    </template>
+    <h1 v-else >{{ message }}</h1>
     <button id="button" @click="restart">Рестарт</button>
   </div>
 </template>
@@ -44,6 +67,7 @@ export default {
       avalableSquare: null,
       moveCount: 15,
       boardHeight: 200,
+      restartCount: 0
     };
   },
   created() {
@@ -95,8 +119,12 @@ export default {
       this.chosenChecker =  null
       this.avalableSquare =  null
       this.moveCount = 15
+      this.restartCount ++
+      if (this.restartCount>10)
+        this.$emit('secret')
     },
     handleClick(i) {
+      this.restartCount = 0
       if (!this.isThereMoves) return
       const { type } = this.checkers[i]
       if (type !== 'e' && i !== this.chosenChecker) {

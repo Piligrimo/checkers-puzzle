@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <password v-if="unauthorized" @check="checkAuth"/>
-    <game  v-else/>
+    <threat v-if="isAuth"/>
+    <password v-else-if="secret" @check="checkAuth"/>
+    <game @secret="secret = true"  v-else/>
   </div>
 </template>
 
@@ -9,25 +10,29 @@
 
 import Game from './components/Game.vue'
 import Password from './components/Password.vue'
+import Threat from './components/Threat.vue'
 
 
 export default {
   name: 'App',
   components: {
     Game,
-    Password
+    Password,
+    Threat
   },
   data() {
     return {
-      unauthorized: true
+      secret: false,
+      isAuth: false
     }
   },
   mounted() {
     this.checkAuth()
   },
   methods: {
-    checkAuth() {
-      this.unauthorized = localStorage.getItem('password') !== '71016'
+    checkAuth(password) {
+      if (password === '71016')
+        this.isAuth = true
     }
   }
 
@@ -35,15 +40,26 @@ export default {
 </script>
 
 <style>
+html {
+  height: 100%;
+}
 body {
   background-color: #f1e6d1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+.game{
+  width: 95%;
+  margin: auto;
 }
 #app {
+  height: 100%;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #3b1b08;
   margin-top: 20px;
 }
 
@@ -86,7 +102,7 @@ body {
 
 .checker {
   width: 90%;
-  border-radius: 50px;
+  border-radius: 100%;
   cursor: pointer;
 }
 

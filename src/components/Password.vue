@@ -8,7 +8,7 @@
 <script>
 export default {
 
-  name: 'App',
+  name: 'ThePassword',
   components: {
   },
   data() {
@@ -19,8 +19,7 @@ export default {
   },
   methods: {
     login() {
-      localStorage.setItem('password', this.password)
-      this.$emit('check')
+      this.$emit('check', this.password)
       this.shakin = true 
       const vue = this
       setTimeout(() => {vue.shakin = false}, 1000)
